@@ -1,0 +1,6 @@
+# Instruir o GitHub Linguist a contabilizar arquivos XAML como C#
+*.xaml linguist-language=C#
+*.xaml.cs linguist-language=C#
+
+# Garantir que o C# seja a linguagem predominante do projeto
+scripts/PainelTI.ps1 linguist-language=PowerShell
