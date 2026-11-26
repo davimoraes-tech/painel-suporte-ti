@@ -6,8 +6,16 @@ using PainelSuporteTI.Models;
 
 namespace PainelSuporteTI.Services;
 
+/// <summary>
+/// [PT-BR] Provedor de diagnosticos de hardware e telemetria do sistema operacional utilizando consultas WMI/CIM nativas.
+/// [EN]    Hardware diagnostic and OS telemetry provider using native WMI/CIM queries.
+/// </summary>
 public static class SystemDiagnostics
 {
+    /// <summary>
+    /// [PT-BR] Coleta assincronamente os dados de telemetria da maquina para alimentar os cards do Dashboard.
+    /// [EN]    Asynchronously collects workstation telemetry data to populate the Dashboard cards.
+    /// </summary>
     public static async Task<DashboardInfo> ObterDashboardInfoAsync()
     {
         return await Task.Run(() =>
@@ -20,8 +28,11 @@ public static class SystemDiagnostics
 
             try
             {
-                // Obter sistema operacional
-                using var searcherOs = new ManagementObjectSearcher("SELECT Caption, Version, LastBootUpTime, FreePhysicalMemory, TotalVisibleMemorySize FROM Win32_OperatingSystem");
+                // [PT-BR] 1. Consulta dados do Sistema Operacional (Versao, Uptime e Memoria RAM)
+                // [EN]    1. Query Operating System metrics (Version, Uptime and RAM memory)
+                using var searcherOs = new ManagementObjectSearcher(
+                    "SELECT Caption, Version, LastBootUpTime, FreePhysicalMemory, TotalVisibleMemorySize FROM Win32_OperatingSystem");
+                
                 foreach (ManagementObject os in searcherOs.Get())
                 {
                     info.WindowsVersion = $"{os["Caption"]} ({os["Version"]})";
@@ -30,7 +41,7 @@ public static class SystemDiagnostics
                     {
                         var bootDate = ManagementDateTimeConverter.ToDateTime(os["LastBootUpTime"].ToString());
                         var diff = DateTime.Now - bootDate;
-                        info.UptimeSummary = $"{diff.Days}d {diff.Hours}h {diff.Minutes}m (desde {bootDate:dd/MM HH:mm})";
+                        info.UptimeSummary = $"{diff.Days}d {diff.Hours}h {diff.Minutes}m ({bootDate:dd/MM HH:mm})";
                     }
 
                     if (os["TotalVisibleMemorySize"] != null && os["FreePhysicalMemory"] != null)
@@ -45,31 +56,41 @@ public static class SystemDiagnostics
                     }
                 }
 
-                // Obter Fabricante e Usuário Logado
-                using var searcherCs = new ManagementObjectSearcher("SELECT Manufacturer, Model, UserName FROM Win32_ComputerSystem");
+                // [PT-BR] 2. Consulta Fabricante, Modelo e o Usuario Real logado na sessao interativa
+                // [EN]    2. Query Manufacturer, Model and the active interactive session username
+                using var searcherCs = new ManagementObjectSearcher(
+                    "SELECT Manufacturer, Model, UserName FROM Win32_ComputerSystem");
+                
                 foreach (ManagementObject cs in searcherCs.Get())
                 {
                     info.ManufacturerAndModel = $"{cs["Manufacturer"]} {cs["Model"]}";
-                    info.LoggedUser = cs["UserName"]?.ToString() ?? "Nenhum usuário detectado";
+                    info.LoggedUser = cs["UserName"]?.ToString() ?? (LocalizationService.IsEnglish ? "No interactive user" : "Nenhum usuário detectado");
                 }
 
-                // Obter Processador
-                using var searcherCpu = new ManagementObjectSearcher("SELECT Name, NumberOfCores, NumberOfLogicalProcessors FROM Win32_Processor");
+                // [PT-BR] 3. Consulta Processador (CPU), nucleos e threads
+                // [EN]    3. Query Processor (CPU), core and logical thread count
+                using var searcherCpu = new ManagementObjectSearcher(
+                    "SELECT Name, NumberOfCores, NumberOfLogicalProcessors FROM Win32_Processor");
+                
                 foreach (ManagementObject cpu in searcherCpu.Get())
                 {
                     info.CpuName = $"{cpu["Name"]} ({cpu["NumberOfCores"]}c / {cpu["NumberOfLogicalProcessors"]}t)".Trim();
                     break;
                 }
 
-                // Obter Serial BIOS
-                using var searcherBios = new ManagementObjectSearcher("SELECT SerialNumber FROM Win32_BIOS");
+                // [PT-BR] 4. Consulta Numero de Serie gravado na BIOS
+                // [EN]    4. Query Hardware Serial Number from BIOS
+                using var searcherBios = new ManagementObjectSearcher(
+                    "SELECT SerialNumber FROM Win32_BIOS");
+                
                 foreach (ManagementObject b in searcherBios.Get())
                 {
                     info.SerialNumber = b["SerialNumber"]?.ToString() ?? "-";
                     break;
                 }
 
-                // Disco C:
+                // [PT-BR] 5. Medicao do espaco em disco da unidade do sistema C:
+                // [EN]    5. Disk space measurement on C: system drive
                 var driveC = new DriveInfo("C");
                 if (driveC.IsReady)
                 {
@@ -77,12 +98,15 @@ public static class SystemDiagnostics
                     double freeGb = driveC.AvailableFreeSpace / (1024.0 * 1024 * 1024);
                     double usedGb = totalGb - freeGb;
                     info.DiskCUsedPercent = Math.Round((usedGb / totalGb) * 100, 1);
-                    info.DiskCSummary = $"{freeGb:N1} GB livres de {totalGb:N1} GB ({info.DiskCUsedPercent}% usado)";
+
+                    var freeText = LocalizationService.IsEnglish ? "free of" : "livres de";
+                    var usedText = LocalizationService.IsEnglish ? "used" : "usado";
+                    info.DiskCSummary = $"{freeGb:N1} GB {freeText} {totalGb:N1} GB ({info.DiskCUsedPercent}% {usedText})";
                 }
             }
             catch (Exception ex)
             {
-                LogService.EscreverLog($"Erro ao ler telemetria WMI: {ex.Message}");
+                LogService.EscreverLog($"WMI telemetry error: {ex.Message}");
             }
 
             return info;

@@ -1,13 +1,11 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 
 namespace PainelSuporteTI;
 
 /// <summary>
-/// Interaction logic for App.xaml
+/// [PT-BR] Ponto de entrada do ciclo de vida da aplicacao WPF.
+/// [EN]    Application lifecycle entry point for the WPF application.
 /// </summary>
 public partial class App : Application
 {
 }
-

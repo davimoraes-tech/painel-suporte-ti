@@ -1,45 +1,40 @@
 @echo off
 setlocal
-title Painel de Suporte TI Windows
-cls
-echo ================================================================
-echo               PAINEL DE SUPORTE TI WINDOWS
-echo ================================================================
-echo.
-echo   [1] Abrir Painel Visual Moderno (C# / WPF - Recomendado)
-echo   [2] Abrir Painel Tradicional (PowerShell Console)
-echo   [0] Sair
-echo.
-echo ================================================================
-set /p opt="Escolha uma opcao [1]: "
-if "%opt%"=="" set opt=1
-if "%opt%"=="1" goto LAUNCH_WPF
-if "%opt%"=="2" goto LAUNCH_PS
-if "%opt%"=="0" exit /b 0
-goto LAUNCH_WPF
+rem =========================================================================
+rem [PT-BR] Inicializador do Painel de Suporte TI Windows (C# / WPF - .NET 8)
+rem [EN]    Launcher for the Windows IT Support Panel (C# / WPF - .NET 8)
+rem =========================================================================
 
-:LAUNCH_WPF
+title Windows IT Support Panel
+
+set "EXE_PUB=%~dp0Publish\PainelSuporteTI.exe"
 set "EXE_RELEASE=%~dp0src\PainelSuporteTI\bin\Release\net8.0-windows\PainelSuporteTI.exe"
 set "EXE_DEBUG=%~dp0src\PainelSuporteTI\bin\Debug\net8.0-windows\PainelSuporteTI.exe"
-set "EXE_PUB=%~dp0Publish\PainelSuporteTI.exe"
 
+rem [PT-BR] 1. Tenta executar o binario de publicacao otimizado
+rem [EN]    1. Attempt to run optimized publish binary
 if exist "%EXE_PUB%" (
     start "" "%EXE_PUB%"
     exit /b 0
 )
+
+rem [PT-BR] 2. Tenta executar a versao compilada em Release
+rem [EN]    2. Attempt to run compiled Release build
 if exist "%EXE_RELEASE%" (
     start "" "%EXE_RELEASE%"
     exit /b 0
 )
+
+rem [PT-BR] 3. Tenta executar a versao compilada em Debug
+rem [EN]    3. Attempt to run compiled Debug build
 if exist "%EXE_DEBUG%" (
     start "" "%EXE_DEBUG%"
     exit /b 0
 )
 
-echo Compilando e iniciando a versao C# WPF...
+rem [PT-BR] 4. Se nenhum executavel for encontrado, compila e roda via .NET SDK
+rem [EN]    4. If no binary exists, build and run directly via .NET SDK
+echo [PT-BR] Compilando e iniciando a versao C# WPF...
+echo [EN]    Building and starting C# WPF application...
 dotnet run --project "%~dp0src\PainelSuporteTI\PainelSuporteTI.csproj"
-exit /b 0
-
-:LAUNCH_PS
-powershell -NoProfile -Command "Start-Process powershell -Verb RunAs -ArgumentList ('-NoProfile -ExecutionPolicy Bypass -File ' + [char]34 + '%~dp0scripts\PainelTI.ps1' + [char]34)"
 exit /b 0

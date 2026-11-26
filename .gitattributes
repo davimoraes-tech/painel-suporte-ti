@@ -1,6 +1,4 @@
-# Instruir o GitHub Linguist a contabilizar arquivos XAML como C#
+# [PT-BR] Contabilizar arquivos XAML e C# para estatisticas do GitHub
+# [EN]    Map XAML and C# files for GitHub Linguist language stats
 *.xaml linguist-language=C#
 *.xaml.cs linguist-language=C#
-
-# Garantir que o C# seja a linguagem predominante do projeto
-scripts/PainelTI.ps1 linguist-language=PowerShell

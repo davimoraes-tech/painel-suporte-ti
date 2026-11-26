@@ -10,6 +10,10 @@ using PainelSuporteTI.Services;
 
 namespace PainelSuporteTI;
 
+/// <summary>
+/// [PT-BR] Janela principal do Painel de Suporte TI gerenciando navegacao, telemetria e o terminal de saida.
+/// [EN]    Main window of the IT Support Panel managing navigation, telemetry and output terminal.
+/// </summary>
 public partial class MainWindow : Window
 {
     private CancellationTokenSource? _cts;
@@ -22,6 +26,10 @@ public partial class MainWindow : Window
         Loaded += MainWindow_Loaded;
     }
 
+    /// <summary>
+    /// [PT-BR] Evento disparado quando a janela e carregada pela primeira vez.
+    /// [EN]    Event triggered when the window is loaded for the first time.
+    /// </summary>
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
         AplicarIdioma();
@@ -30,11 +38,15 @@ public partial class MainWindow : Window
         CarregarLogs();
         
         var msgInicial = LocalizationService.IsEnglish 
-            ? "=== IT Support Panel successfully started ===\nSelect an option from the menu or use the Dashboard quick actions."
+            ? "=== Windows IT Support Panel successfully started ===\nSelect an option from the menu or use the Dashboard quick actions."
             : "=== Painel de Suporte TI iniciado com sucesso ===\nSelecione uma opção no menu ou utilize os atalhos rápidos do Dashboard.";
         AdicionarLinhaTerminal(msgInicial, false);
     }
 
+    /// <summary>
+    /// [PT-BR] Verifica se a janela esta elevada como Administrador e atualiza o badge visual.
+    /// [EN]    Verifies whether the window is elevated as Administrator and updates visual badge.
+    /// </summary>
     private void VerificarAdmin()
     {
         var isAdmin = PowerShellRunner.EhAdmin();
@@ -54,6 +66,10 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// [PT-BR] Alterna dinamicamente o idioma da aplicacao entre Portugues e Ingles.
+    /// [EN]    Dynamically toggles application language between Portuguese and English.
+    /// </summary>
     private void BtnIdioma_Click(object sender, RoutedEventArgs e)
     {
         LocalizationService.CurrentLanguage = LocalizationService.IsEnglish ? AppLanguage.PT : AppLanguage.EN;
@@ -61,6 +77,10 @@ public partial class MainWindow : Window
         VerificarAdmin();
     }
 
+    /// <summary>
+    /// [PT-BR] Atualiza todos os textos e rotulos de todos os controles para o idioma selecionado.
+    /// [EN]    Updates all UI text and control labels to the selected language.
+    /// </summary>
     private void AplicarIdioma()
     {
         Title = LocalizationService.Get("WindowTitle");
@@ -71,7 +91,7 @@ public partial class MainWindow : Window
         BtnAtualizarGeral.Content = LocalizationService.Get("BtnRefresh");
         BtnIdioma.Content = LocalizationService.Get("BtnLang");
 
-        // Menu Lateral
+        // Menu Lateral / Sidebar
         TxtNavDashboard.Text = LocalizationService.Get("NavDashboard");
         TxtNavManutencao.Text = LocalizationService.Get("NavManutencao");
         TxtNavRede.Text = LocalizationService.Get("NavRede");
@@ -105,7 +125,7 @@ public partial class MainWindow : Window
         TxtQuickTeamsDesc.Text = LocalizationService.Get("QuickTeamsDesc");
         BtnQuickTeams.Content = LocalizationService.Get("QuickTeamsBtn");
 
-        // Manutenção
+        // Manutencao / Maintenance
         TxtManutTempTitle.Text = LocalizationService.Get("ManutTempTitle");
         TxtManutTempDesc.Text = LocalizationService.Get("ManutTempDesc");
         BtnManutTemp.Content = LocalizationService.Get("ManutTempBtn");
@@ -130,7 +150,7 @@ public partial class MainWindow : Window
         TxtManutSmartDesc.Text = LocalizationService.Get("ManutSmartDesc");
         BtnManutSmart.Content = LocalizationService.Get("ManutSmartBtn");
 
-        // Rede
+        // Rede / Network
         TxtRedeResetTitle.Text = LocalizationService.Get("RedeResetTitle");
         TxtRedeResetDesc.Text = LocalizationService.Get("RedeResetDesc");
         BtnRedeReset.Content = LocalizationService.Get("RedeResetBtn");
@@ -151,7 +171,7 @@ public partial class MainWindow : Window
         TxtRedeNcpaDesc.Text = LocalizationService.Get("RedeNcpaDesc");
         BtnRedeNcpa.Content = LocalizationService.Get("RedeNcpaBtn");
 
-        // Impressão
+        // Impressao / Printing
         TxtImpSpoolerTitle.Text = LocalizationService.Get("ImpSpoolerTitle");
         TxtImpSpoolerDesc.Text = LocalizationService.Get("ImpSpoolerDesc");
         BtnImpSpooler.Content = LocalizationService.Get("ImpSpoolerBtn");
@@ -164,7 +184,7 @@ public partial class MainWindow : Window
         TxtImpSettingsDesc.Text = LocalizationService.Get("ImpSettingsDesc");
         BtnImpSettings.Content = LocalizationService.Get("ImpSettingsBtn");
 
-        // Diagnóstico
+        // Diagnostico / Diagnostics
         TxtDiagFichaTitle.Text = LocalizationService.Get("DiagFichaTitle");
         TxtDiagFichaDesc.Text = LocalizationService.Get("DiagFichaDesc");
         BtnDiagFicha.Content = LocalizationService.Get("DiagFichaBtn");
@@ -177,7 +197,7 @@ public partial class MainWindow : Window
         TxtDiagResmonDesc.Text = LocalizationService.Get("DiagResmonDesc");
         BtnDiagResmon.Content = LocalizationService.Get("DiagResmonBtn");
 
-        // Drivers
+        // Drivers & Updates
         TxtDrvErrorsTitle.Text = LocalizationService.Get("DrvErrorsTitle");
         TxtDrvErrorsDesc.Text = LocalizationService.Get("DrvErrorsDesc");
         BtnDrvErrors.Content = LocalizationService.Get("DrvErrorsBtn");
@@ -233,10 +253,13 @@ public partial class MainWindow : Window
             TxtTerminalStatus.Text = LocalizationService.Get("TerminalReady");
         }
 
-        // Atualiza títulos da view atual
         AtualizarTitulosViewAtual();
     }
 
+    /// <summary>
+    /// [PT-BR] Atualiza o titulo e subtitulo da tela conforme a aba atualmente selecionada.
+    /// [EN]    Updates header title and subtitle based on the currently selected navigation view.
+    /// </summary>
     private void AtualizarTitulosViewAtual()
     {
         if (NavDashboard.IsChecked == true)
@@ -281,6 +304,10 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// [PT-BR] Carrega telemetria de hardware e atualiza os cards de CPU, RAM e Disco no Dashboard.
+    /// [EN]    Loads hardware telemetry and refreshes CPU, RAM and Disk cards on Dashboard.
+    /// </summary>
     private async Task CarregarDashboardAsync()
     {
         try
@@ -312,6 +339,10 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// [PT-BR] Le os registros mais recentes do arquivo de auditoria em C:\ProgramData\PainelTI\painel.log.
+    /// [EN]    Reads most recent records from audit file at C:\ProgramData\PainelTI\painel.log.
+    /// </summary>
     private void CarregarLogs()
     {
         try
@@ -326,12 +357,15 @@ public partial class MainWindow : Window
         }
     }
 
-    // NAVEGAÇÃO ENTRE TELAS
+    /// <summary>
+    /// [PT-BR] Manipulador de eventos de troca de navegacao nas opcoes do menu lateral.
+    /// [EN]    Event handler for sidebar navigation view switching.
+    /// </summary>
     private void Nav_Checked(object sender, RoutedEventArgs e)
     {
         if (ViewDashboard == null) return;
 
-        // Oculta todas
+        // Oculta todas as telas / Hide all views
         ViewDashboard.Visibility = Visibility.Collapsed;
         ViewManutencao.Visibility = Visibility.Collapsed;
         ViewRede.Visibility = Visibility.Collapsed;
@@ -378,7 +412,10 @@ public partial class MainWindow : Window
         AtualizarTitulosViewAtual();
     }
 
-    // EXECUÇÃO DE SCRIPTS POWERSHELL COM STREAMING AO VIVO
+    /// <summary>
+    /// [PT-BR] Executa uma rotina assincrona capturando a saida e atualizando o terminal em tempo real.
+    /// [EN]    Executes a routine asynchronously, capturing output and streaming to the terminal in real time.
+    /// </summary>
     private async Task ExecutarScriptAsync(string nomeAcao, string scriptPowerShell)
     {
         if (_isExecuting)
@@ -425,6 +462,10 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// [PT-BR] Adiciona uma linha de texto na caixa do terminal visual.
+    /// [EN]    Appends a line of text into the visual UI terminal text box.
+    /// </summary>
     private void AdicionarLinhaTerminal(string texto, bool isError)
     {
         if (isError)
@@ -442,7 +483,11 @@ public partial class MainWindow : Window
         }
     }
 
-    // BOTÕES DE CONTROLE DO TERMINAL
+    // =========================================================================
+    // [PT-BR] CONTROLES DO TERMINAL
+    // [EN]    TERMINAL CONTROLS
+    // =========================================================================
+
     private void BtnLimparTerminal_Click(object sender, RoutedEventArgs e)
     {
         TxtTerminal.Clear();
@@ -479,7 +524,11 @@ public partial class MainWindow : Window
         CarregarLogs();
     }
 
-    // BOTÕES DE AÇÕES: MANUTENÇÃO
+    // =========================================================================
+    // [PT-BR] ROTINAS: MANUTENCAO E DISCO
+    // [EN]    ROUTINES: MAINTENANCE & DISK
+    // =========================================================================
+
     private async void BtnLimparTemp_Click(object sender, RoutedEventArgs e)
     {
         var nomeAcao = LocalizationService.IsEnglish ? "Clean Temp Files" : "Limpeza de Temporários";
@@ -536,7 +585,11 @@ public partial class MainWindow : Window
         await ExecutarScriptAsync(nomeAcao, SupportActions.ScriptSaudeDisco);
     }
 
-    // BOTÕES DE AÇÕES: REDE
+    // =========================================================================
+    // [PT-BR] ROTINAS: REDE E CONECTIVIDADE
+    // [EN]    ROUTINES: NETWORK & CONNECTIVITY
+    // =========================================================================
+
     private async void BtnResetRede_Click(object sender, RoutedEventArgs e)
     {
         var pergunta = LocalizationService.IsEnglish
@@ -578,7 +631,11 @@ public partial class MainWindow : Window
         AdicionarLinhaTerminal(msg, false);
     }
 
-    // BOTÕES DE AÇÕES: IMPRESSÃO
+    // =========================================================================
+    // [PT-BR] ROTINAS: IMPRESSAO E SPOOLER
+    // [EN]    ROUTINES: PRINTING & SPOOLER
+    // =========================================================================
+
     private async void BtnLimparFila_Click(object sender, RoutedEventArgs e)
     {
         var nomeAcao = LocalizationService.IsEnglish ? "Clear Print Spooler Queue" : "Limpar Fila de Impressão (Spooler)";
@@ -600,7 +657,11 @@ public partial class MainWindow : Window
         AdicionarLinhaTerminal(msg, false);
     }
 
-    // BOTÕES DE AÇÕES: DIAGNÓSTICO
+    // =========================================================================
+    // [PT-BR] ROTINAS: DIAGNOSTICO E HARDWARE
+    // [EN]    ROUTINES: DIAGNOSTICS & HARDWARE
+    // =========================================================================
+
     private async void BtnFichaCompleta_Click(object sender, RoutedEventArgs e)
     {
         var nomeAcao = LocalizationService.IsEnglish ? "Complete Hardware Specs Sheet" : "Ficha Técnica Completa de Hardware";
@@ -622,7 +683,11 @@ public partial class MainWindow : Window
         AdicionarLinhaTerminal(msg, false);
     }
 
-    // BOTÕES DE AÇÕES: DRIVERS E WINDOWS UPDATE
+    // =========================================================================
+    // [PT-BR] ROTINAS: DRIVERS E WINDOWS UPDATE
+    // [EN]    ROUTINES: DRIVERS & WINDOWS UPDATE
+    // =========================================================================
+
     private async void BtnDispositivosErro_Click(object sender, RoutedEventArgs e)
     {
         var nomeAcao = LocalizationService.IsEnglish ? "Check Device Errors" : "Verificação de Dispositivos com Erro";
@@ -668,7 +733,11 @@ public partial class MainWindow : Window
         AdicionarLinhaTerminal(msg, false);
     }
 
-    // BOTÕES DE AÇÕES: MICROSOFT 365
+    // =========================================================================
+    // [PT-BR] ROTINAS: MICROSOFT 365, ENTRA ID E TEAMS
+    // [EN]    ROUTINES: MICROSOFT 365, ENTRA ID & TEAMS
+    // =========================================================================
+
     private async void BtnStatusM365_Click(object sender, RoutedEventArgs e)
     {
         var nomeAcao = LocalizationService.IsEnglish ? "Entra ID / Intune Join Status" : "Status de Vínculo Entra ID / Intune";
@@ -695,7 +764,11 @@ public partial class MainWindow : Window
         }
     }
 
-    // BOTÕES DE AÇÕES: LOGS
+    // =========================================================================
+    // [PT-BR] ROTINAS: AUDITORIA E LOGS
+    // [EN]    ROUTINES: AUDIT & LOGS
+    // =========================================================================
+
     private void BtnRecarregarLogs_Click(object sender, RoutedEventArgs e)
     {
         CarregarLogs();
