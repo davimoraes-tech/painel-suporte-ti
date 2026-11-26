@@ -41,7 +41,7 @@ Windows-It-Support-Panel/
 │   ├── run-powershell.bat            # Quick launcher for PowerShell console
 │   └── run-wpf.bat                   # Quick launcher for WPF application
 │
-├── Iniciar-Painel.bat                # Unified interactive launcher
+├── RunPanel.bat                      # Unified interactive launcher
 ├── Windows-It-Support-Panel.sln      # Visual Studio Solution
 └── .gitignore
 ```
@@ -51,7 +51,7 @@ Windows-It-Support-Panel/
 ### 🚀 How to Run
 
 1. **Via Unified Launcher (Recommended):**  
-   Double-click `Iniciar-Painel.bat` at the root folder to choose between launching the **Modern WPF Panel** or the **Traditional PowerShell Console**.
+   Double-click `RunPanel.bat` at the root folder to choose between launching the **Modern WPF Panel** or the **Traditional PowerShell Console**.
 2. **Via Visual Studio:**  
    Open `Windows-It-Support-Panel.sln` in Visual Studio 2022 and press `F5`.
 
@@ -69,6 +69,15 @@ Este repositório é um **projeto experimental de aprendizado e estudos** (em de
 ### 👏 Créditos e Reconhecimento
 Este projeto é baseado e inspirado no script original **Painel de Suporte TI** desenvolvido por **Davi Moraes** ([@davimoraes-dev](https://github.com/davimoraes-dev)).  
 A concepção da lógica operacional (limpeza de temporários no perfil ativo do usuário, destravamento de spooler, reset de pilha IP/Winsock e diagnósticos de M365/Intune) foi originalmente criada por ele. Todos os créditos pela base dos scripts pertencem ao autor original.
+
+---
+
+### ⚡ Como Executar
+
+1. **Pelo Inicializador Unificado (Recomendado):**  
+   Dê um duplo clique em `RunPanel.bat` na raiz para escolher entre a versão Visual C# WPF ou o Console PowerShell.
+2. **Pelo Visual Studio:**  
+   Abra `Windows-It-Support-Panel.sln` no Visual Studio 2022 e pressione `F5`.
 
 ---
 
