@@ -1,0 +1,696 @@
+﻿<Window x:Class="PainelSuporteTI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Painel de Suporte TI - Central de Atendimento" 
+        Height="780" Width="1200"
+        MinHeight="650" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgDark}"
+        Foreground="{StaticResource TextPrimary}"
+        FontFamily="Segoe UI, Inter, Arial">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- BARRA LATERAL (SIDEBAR) -->
+        <Border Grid.Column="0" Background="{StaticResource Surface}" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Cabeçalho do App -->
+                <StackPanel Grid.Row="0" Margin="16,20,16,16">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Width="34" Height="34" CornerRadius="8" Background="#1F6FEB" Margin="0,0,10,0">
+                            <TextBlock Text="🛠️" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <StackPanel>
+                            <TextBlock Text="Painel TI" FontSize="18" FontWeight="Bold" Foreground="{StaticResource TextPrimary}" />
+                            <TextBlock x:Name="TxtAppSubtitle" Text="Suporte Windows v2.0" FontSize="11" Foreground="{StaticResource TextMuted}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator Margin="0,16,0,8" Background="{StaticResource Border}" />
+                </StackPanel>
+
+                <!-- Menu de Navegação -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="12,0">
+                    <StackPanel>
+                        <TextBlock x:Name="TxtSecGeral" Text="GERAL" FontSize="10" FontWeight="Bold" Foreground="{StaticResource TextMuted}" Margin="6,6,0,4" />
+                        <RadioButton x:Name="NavDashboard" Style="{StaticResource SidebarButton}" IsChecked="True" Checked="Nav_Checked">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="📊" Margin="0,0,10,0" />
+                                <TextBlock x:Name="TxtNavDashboard" Text="Visão Geral / Dashboard" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <TextBlock x:Name="TxtSecRotinas" Text="ROTINAS DE SUPORTE" FontSize="10" FontWeight="Bold" Foreground="{StaticResource TextMuted}" Margin="6,14,0,4" />
+                        
+                        <RadioButton x:Name="NavManutencao" Style="{StaticResource SidebarButton}" Checked="Nav_Checked">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🧹" Margin="0,0,10,0" />
+                                <TextBlock x:Name="TxtNavManutencao" Text="Manutenção &amp; Disco" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton x:Name="NavRede" Style="{StaticResource SidebarButton}" Checked="Nav_Checked">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🌐" Margin="0,0,10,0" />
+                                <TextBlock x:Name="TxtNavRede" Text="Rede &amp; Internet" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton x:Name="NavImpressao" Style="{StaticResource SidebarButton}" Checked="Nav_Checked">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🖨️" Margin="0,0,10,0" />
+                                <TextBlock x:Name="TxtNavImpressao" Text="Impressão / Spooler" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton x:Name="NavDiagnostico" Style="{StaticResource SidebarButton}" Checked="Nav_Checked">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🩺" Margin="0,0,10,0" />
+                                <TextBlock x:Name="TxtNavDiagnostico" Text="Diagnóstico &amp; Hardware" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton x:Name="NavDrivers" Style="{StaticResource SidebarButton}" Checked="Nav_Checked">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="⚙️" Margin="0,0,10,0" />
+                                <TextBlock x:Name="TxtNavDrivers" Text="Drivers &amp; Updates" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <RadioButton x:Name="NavM365" Style="{StaticResource SidebarButton}" Checked="Nav_Checked">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="☁️" Margin="0,0,10,0" />
+                                <TextBlock x:Name="TxtNavM365" Text="Microsoft 365 &amp; Teams" />
+                            </StackPanel>
+                        </RadioButton>
+
+                        <TextBlock x:Name="TxtSecAuditoria" Text="AUDITORIA" FontSize="10" FontWeight="Bold" Foreground="{StaticResource TextMuted}" Margin="6,14,0,4" />
+                        <RadioButton x:Name="NavLogs" Style="{StaticResource SidebarButton}" Checked="Nav_Checked">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="📝" Margin="0,0,10,0" />
+                                <TextBlock x:Name="TxtNavLogs" Text="Registros de Log" />
+                            </StackPanel>
+                        </RadioButton>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Rodapé da Barra Lateral -->
+                <Border Grid.Row="2" Background="{StaticResource CardBg}" BorderBrush="{StaticResource Border}" BorderThickness="0,1,0,0" Padding="14,10">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="TxtAdminBadge" Text="🛡️ Modo Administrador" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource Success}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- ÁREA PRINCIPAL (CONTEÚDO + TERMINAL) -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="240" MinHeight="140" MaxHeight="450" />
+            </Grid.RowDefinitions>
+
+            <!-- BARRA SUPERIOR (HEADER) -->
+            <Border Grid.Row="0" Background="{StaticResource Surface}" BorderBrush="{StaticResource Border}" BorderThickness="0,0,0,1" Padding="20,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock x:Name="TxtViewTitle" Text="Visão Geral do Sistema" FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" />
+                        <TextBlock x:Name="TxtViewSubtitle" Text="Diagnóstico rápido e atalhos para as rotinas mais frequentes." FontSize="12" Foreground="{StaticResource TextMuted}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Background="{StaticResource CardBg}" BorderBrush="{StaticResource Border}" BorderThickness="1" CornerRadius="6" Padding="12,6" Margin="0,0,10,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="💻 " />
+                                <TextBlock x:Name="TxtHeaderPcInfo" Text="PC: -" FontWeight="SemiBold" FontSize="12" Foreground="{StaticResource TextPrimary}" />
+                                <TextBlock Text="  |  👤 " Margin="6,0,0,0" />
+                                <TextBlock x:Name="TxtHeaderUser" Text="Usuário: -" FontSize="12" Foreground="{StaticResource TextMuted}" />
+                            </StackPanel>
+                        </Border>
+                        <!-- BOTÃO DE IDIOMA PT / EN -->
+                        <Button x:Name="BtnIdioma" Content="🌐 English" Style="{StaticResource SecondaryButton}" Padding="10,6" Margin="0,0,10,0" Click="BtnIdioma_Click" />
+                        <Button x:Name="BtnAtualizarGeral" Content="🔄 Atualizar" Style="{StaticResource SecondaryButton}" Padding="10,6" Click="BtnAtualizarDashboard_Click" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ÁREA DE TELAS (CONTEÚDO) -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20,16">
+                <Grid>
+                    <!-- 1. TELA DASHBOARD -->
+                    <StackPanel x:Name="ViewDashboard" Visibility="Visible">
+                        <!-- CARDS DE TELEMETRIA -->
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Card 1: Computador -->
+                            <Border Grid.Column="0" Style="{StaticResource ActionCard}" Margin="0,0,8,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="LblCardDevice" Text="💻 DISPOSITIVO" FontSize="11" FontWeight="Bold" Foreground="{StaticResource TextMuted}" />
+                                    <TextBlock x:Name="DashTxtModelo" Text="Identificando..." FontSize="14" FontWeight="SemiBold" Margin="0,6,0,2" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock x:Name="DashTxtSerial" Text="Serial: -" FontSize="11" Foreground="{StaticResource TextMuted}" />
+                                    <TextBlock x:Name="DashTxtWindows" Text="Windows: -" FontSize="11" Foreground="{StaticResource TextMuted}" Margin="0,2,0,0" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock x:Name="DashTxtUptime" Text="Ligado: -" FontSize="11" Foreground="{StaticResource Accent}" Margin="0,4,0,0" />
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Card 2: Processador -->
+                            <Border Grid.Column="1" Style="{StaticResource ActionCard}" Margin="4,0,4,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="LblCardCpu" Text="⚡ PROCESSADOR" FontSize="11" FontWeight="Bold" Foreground="{StaticResource TextMuted}" />
+                                    <TextBlock x:Name="DashTxtCpu" Text="Identificando..." FontSize="13" FontWeight="SemiBold" Margin="0,6,0,4" TextWrapping="Wrap" />
+                                    <TextBlock x:Name="LblStatusActive" Text="Status: Ativo" FontSize="11" Foreground="{StaticResource Success}" />
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Card 3: Memória RAM -->
+                            <Border Grid.Column="2" Style="{StaticResource ActionCard}" Margin="4,0,4,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="LblCardRam" Text="🧠 MEMÓRIA RAM" FontSize="11" FontWeight="Bold" Foreground="{StaticResource TextMuted}" />
+                                    <TextBlock x:Name="DashTxtRam" Text="Calculando..." FontSize="14" FontWeight="SemiBold" Margin="0,6,0,6" />
+                                    <ProgressBar x:Name="DashProgressRam" Height="6" Minimum="0" Maximum="100" Value="0" Background="#30363D" Foreground="{StaticResource Accent}" BorderThickness="0" />
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Card 4: Disco C: -->
+                            <Border Grid.Column="3" Style="{StaticResource ActionCard}" Margin="8,0,0,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="LblCardDiskC" Text="💾 DISCO C:" FontSize="11" FontWeight="Bold" Foreground="{StaticResource TextMuted}" />
+                                    <TextBlock x:Name="DashTxtDiscoC" Text="Calculando..." FontSize="14" FontWeight="SemiBold" Margin="0,6,0,6" />
+                                    <ProgressBar x:Name="DashProgressDiscoC" Height="6" Minimum="0" Maximum="100" Value="0" Background="#30363D" Foreground="{StaticResource Success}" BorderThickness="0" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <!-- AÇÕES RÁPIDAS -->
+                        <TextBlock x:Name="LblQuickActionsTitle" Text="⚡ AÇÕES RÁPIDAS MAIS FREQUENTES" FontSize="13" FontWeight="Bold" Foreground="{StaticResource TextMuted}" Margin="0,0,0,10" />
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" Style="{StaticResource ActionCard}" Margin="0,0,6,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtQuickCleanTempTitle" Text="🧹 Limpar Temporários" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                    <TextBlock x:Name="TxtQuickCleanTempDesc" Text="Libera espaço limpando Temp do Windows e do usuário." FontSize="11" Foreground="{StaticResource TextMuted}" Height="34" TextWrapping="Wrap" />
+                                    <Button x:Name="BtnQuickCleanTemp" Content="Executar Limpeza" Style="{StaticResource ActionButton}" Margin="0,8,0,0" Click="BtnLimparTemp_Click" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Style="{StaticResource ActionCard}" Margin="3,0,3,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtQuickResetNetTitle" Text="🔄 Reset de Rede" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                    <TextBlock x:Name="TxtQuickResetNetDesc" Text="Redefine IP, pilha Winsock e limpa cache de DNS." FontSize="11" Foreground="{StaticResource TextMuted}" Height="34" TextWrapping="Wrap" />
+                                    <Button x:Name="BtnQuickResetNet" Content="Resetar Rede" Style="{StaticResource SecondaryButton}" Margin="0,8,0,0" Click="BtnResetRede_Click" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="2" Style="{StaticResource ActionCard}" Margin="3,0,3,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtQuickSpoolerTitle" Text="🖨️ Destravar Spooler" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                    <TextBlock x:Name="TxtQuickSpoolerDesc" Text="Limpa documentos presos e reinicia serviço de impressão." FontSize="11" Foreground="{StaticResource TextMuted}" Height="34" TextWrapping="Wrap" />
+                                    <Button x:Name="BtnQuickSpooler" Content="Limpar Spooler" Style="{StaticResource SecondaryButton}" Margin="0,8,0,0" Click="BtnLimparFila_Click" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="3" Style="{StaticResource ActionCard}" Margin="6,0,0,0">
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtQuickTeamsTitle" Text="💬 Limpar Cache Teams" FontWeight="Bold" FontSize="13" Margin="0,0,0,4" />
+                                    <TextBlock x:Name="TxtQuickTeamsDesc" Text="Fecha o Teams e limpa os arquivos de cache corrompidos." FontSize="11" Foreground="{StaticResource TextMuted}" Height="34" TextWrapping="Wrap" />
+                                    <Button x:Name="BtnQuickTeams" Content="Limpar Teams" Style="{StaticResource SecondaryButton}" Margin="0,8,0,0" Click="BtnLimparTeams_Click" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- 2. TELA MANUTENÇÃO -->
+                    <StackPanel x:Name="ViewManutencao" Visibility="Collapsed">
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtManutTempTitle" Text="Limpeza de Arquivos Temporários" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtManutTempDesc" Text="Limpa C:\Windows\Temp e a pasta Temp do usuário atualmente logado (mantém arquivos abertos e com menos de 24h)." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnManutTemp" Grid.Column="1" Content="Executar Limpeza" Style="{StaticResource ActionButton}" Click="BtnLimparTemp_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtManutCleanmgrTitle" Text="Limpeza de Disco Avançada (cleanmgr)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtManutCleanmgrDesc" Text="Abre a ferramenta nativa do Windows permitindo apagar instalações anteriores e atualizações antigas." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnManutCleanmgr" Grid.Column="1" Content="Abrir Cleanmgr" Style="{StaticResource SecondaryButton}" Click="BtnCleanmgr_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtManutSfcTitle" Text="Verificação e Reparo de Arquivos do Windows (SFC)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtManutSfcDesc" Text="Executa sfc /scannow para validar e recuperar arquivos de sistema corrompidos (5 a 15 min)." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnManutSfc" Grid.Column="1" Content="Rodar SFC" Style="{StaticResource PrimaryAccentButton}" Click="BtnSfc_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtManutDismTitle" Text="Reparo da Imagem do Windows (DISM)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtManutDismDesc" Text="Restaura a integridade da imagem do sistema via Windows Update (requer internet)." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnManutDism" Grid.Column="1" Content="Rodar DISM" Style="{StaticResource PrimaryAccentButton}" Click="BtnDism_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtManutChkdskTitle" Text="Verificação de Integridade do Disco C: (CHKDSK)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtManutChkdskDesc" Text="Executa chkdsk C: /scan em modo somente leitura (online, sem reiniciar)." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnManutChkdsk" Grid.Column="1" Content="Verificar Disco" Style="{StaticResource SecondaryButton}" Click="BtnChkdsk_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtManutSmartTitle" Text="Saúde Física e Confiabilidade do Disco (SMART)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtManutSmartDesc" Text="Exibe temperatura, porcentagem de desgaste de SSDs e contadores de erro físico." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnManutSmart" Grid.Column="1" Content="Consultar SMART" Style="{StaticResource SecondaryButton}" Click="BtnSaudeDisco_Click" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 3. TELA REDE -->
+                    <StackPanel x:Name="ViewRede" Visibility="Collapsed">
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtRedeResetTitle" Text="Reset Completo da Pilha de Rede" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtRedeResetDesc" Text="Executa release/renew de IP, flushdns, reset de Winsock e pilha TCP/IP (requer reiniciar)." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnRedeReset" Grid.Column="1" Content="Resetar Rede" Style="{StaticResource DangerButton}" Click="BtnResetRede_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtRedeInfoTitle" Text="Diagnóstico e Informações de Rede" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtRedeInfoDesc" Text="Lista adaptadores ativos, IP, Gateway, Servidores DNS e detalhes do sinal Wi-Fi." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnRedeInfo" Grid.Column="1" Content="Obter Detalhes" Style="{StaticResource SecondaryButton}" Click="BtnInfoRede_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtRedeTestTitle" Text="Bateria de Testes de Conectividade" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtRedeTestDesc" Text="Testa conexão até o Roteador/Gateway, Internet (8.8.8.8), DNS, Outlook 365 e Teams." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnRedeTest" Grid.Column="1" Content="Testar Conexões" Style="{StaticResource PrimaryAccentButton}" Click="BtnTestarConexao_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtRedeDnsTitle" Text="Limpar Cache de DNS (Flush DNS)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtRedeDnsDesc" Text="Esvazia o cache local de resolução de nomes DNS do Windows." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnRedeDns" Grid.Column="1" Content="Flush DNS" Style="{StaticResource SecondaryButton}" Click="BtnLimparDNS_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtRedeNcpaTitle" Text="Abrir Conexões de Rede (ncpa.cpl)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtRedeNcpaDesc" Text="Abre a janela tradicional de adaptadores de rede do Painel de Controle." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnRedeNcpa" Grid.Column="1" Content="Abrir Painel" Style="{StaticResource SecondaryButton}" Click="BtnNcpa_Click" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 4. TELA IMPRESSÃO -->
+                    <StackPanel x:Name="ViewImpressao" Visibility="Collapsed">
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtImpSpoolerTitle" Text="Limpar Fila de Impressão Travada" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtImpSpoolerDesc" Text="Para o serviço Spooler, apaga os arquivos da pasta System32\spool\PRINTERS e reinicia o serviço." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnImpSpooler" Grid.Column="1" Content="Destravar Spooler" Style="{StaticResource ActionButton}" Click="BtnLimparFila_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtImpListTitle" Text="Listar Impressoras Instaladas" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtImpListDesc" Text="Exibe o nome das impressoras, status da fila, porta de comunicação e impressora padrão." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnImpList" Grid.Column="1" Content="Listar Impressoras" Style="{StaticResource SecondaryButton}" Click="BtnListarImpressoras_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtImpSettingsTitle" Text="Abrir Central de Dispositivos e Impressoras" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtImpSettingsDesc" Text="Abre a interface do Windows para adicionar ou remover impressoras." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnImpSettings" Grid.Column="1" Content="Abrir Central" Style="{StaticResource SecondaryButton}" Click="BtnAbrirImpressorasConfig_Click" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 5. TELA DIAGNÓSTICO -->
+                    <StackPanel x:Name="ViewDiagnostico" Visibility="Collapsed">
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtDiagFichaTitle" Text="Gerar Ficha Técnica Completa do Computador" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtDiagFichaDesc" Text="Levanta placa-mãe, pentes de memória (capacidade/clock/slots), vídeo, monitores WMI e bateria. Salva em .txt." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnDiagFicha" Grid.Column="1" Content="Gerar Relatório" Style="{StaticResource PrimaryAccentButton}" Click="BtnFichaCompleta_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtDiagTopRamTitle" Text="Top 10 Processos por Uso de Memória" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtDiagTopRamDesc" Text="Descobre quais aplicativos estão consumindo mais RAM neste momento." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnDiagTopRam" Grid.Column="1" Content="Analisar Processos" Style="{StaticResource SecondaryButton}" Click="BtnTopProcessos_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtDiagResmonTitle" Text="Abrir Monitor de Recursos (resmon)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtDiagResmonDesc" Text="Abre a ferramenta gráfica detalhada de CPU, Disco, Rede e Memória do Windows." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnDiagResmon" Grid.Column="1" Content="Abrir Resmon" Style="{StaticResource SecondaryButton}" Click="BtnResmon_Click" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 6. TELA DRIVERS & UPDATES -->
+                    <StackPanel x:Name="ViewDrivers" Visibility="Collapsed">
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtDrvErrorsTitle" Text="Dispositivos com Erro (Gerenciador de Dispositivos)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtDrvErrorsDesc" Text="Varre a árvore Plug and Play procurando componentes com interrogação amarela ou falhas." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnDrvErrors" Grid.Column="1" Content="Verificar Erros" Style="{StaticResource SecondaryButton}" Click="BtnDispositivosErro_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtDrvUpdateTitle" Text="Atualizar Drivers via Windows Update API" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtDrvUpdateDesc" Text="Consulta a API COM do Windows Update por novos pacotes de drivers e instala automaticamente." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnDrvUpdate" Grid.Column="1" Content="Atualizar Drivers" Style="{StaticResource ActionButton}" Click="BtnAtualizarDrivers_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtDrvBackupTitle" Text="Exportar Backup dos Drivers de Terceiros" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtDrvBackupDesc" Text="Exporta todos os drivers instalados nesta máquina para C:\ProgramData\PainelTI\Drivers_..." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnDrvBackup" Grid.Column="1" Content="Fazer Backup" Style="{StaticResource SecondaryButton}" Click="BtnBackupDrivers_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtDrvWinUpdateTitle" Text="Abrir Windows Update &amp; Iniciar Verificação" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtDrvWinUpdateDesc" Text="Abre a tela nativa de configurações e aciona o UsoClient para buscar atualizações." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnDrvWinUpdate" Grid.Column="1" Content="Abrir Windows Update" Style="{StaticResource SecondaryButton}" Click="BtnWindowsUpdate_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtDrvDevmgmtTitle" Text="Abrir Gerenciador de Dispositivos (devmgmt.msc)" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtDrvDevmgmtDesc" Text="Abre a árvore tradicional de componentes de hardware do Windows." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnDrvDevmgmt" Grid.Column="1" Content="Abrir Gerenciador" Style="{StaticResource SecondaryButton}" Click="BtnDevmgmt_Click" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 7. TELA MICROSOFT 365 -->
+                    <StackPanel x:Name="ViewM365" Visibility="Collapsed">
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtM365StatusTitle" Text="Status do Vínculo Microsoft Entra ID / Intune" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtM365StatusDesc" Text="Executa dsregcmd /status para verificar se a máquina está conectada à conta corporativa." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnM365Status" Grid.Column="1" Content="Verificar Vínculo" Style="{StaticResource SecondaryButton}" Click="BtnStatusM365_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtM365IntuneTitle" Text="Forçar Sincronização com o Microsoft Intune" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtM365IntuneDesc" Text="Dispara a tarefa PushLaunch para puxar novas políticas de conformidade e aplicativos da nuvem." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnM365Intune" Grid.Column="1" Content="Sincronizar Intune" Style="{StaticResource PrimaryAccentButton}" Click="BtnSincronizarIntune_Click" />
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtM365TeamsTitle" Text="Limpar Cache do Microsoft Teams" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtM365TeamsDesc" Text="Resolve problemas de login e travamento fechando o Teams e limpando o diretório de cache do usuário ativo." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <Button x:Name="BtnM365Teams" Grid.Column="1" Content="Limpar Cache Teams" Style="{StaticResource ActionButton}" Click="BtnLimparTeams_Click" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 8. TELA LOGS -->
+                    <StackPanel x:Name="ViewLogs" Visibility="Collapsed">
+                        <Border Style="{StaticResource ActionCard}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="TxtLogsHistoryTitle" Text="Histórico de Auditoria Local" FontSize="14" FontWeight="Bold" />
+                                    <TextBlock x:Name="TxtLogsHistoryDesc" Text="Registra data, hora, máquina, operador e ação realizada em C:\ProgramData\PainelTI\painel.log" FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,4,0,0" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Button x:Name="BtnLogsOpenFolder" Content="📂 Abrir Pasta" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0" Click="BtnAbrirPastaLogs_Click" />
+                                    <Button x:Name="BtnLogsReload" Content="🔄 Recarregar" Style="{StaticResource PrimaryAccentButton}" Click="BtnRecarregarLogs_Click" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Background="{StaticResource ConsoleBg}" BorderBrush="{StaticResource Border}" BorderThickness="1" CornerRadius="6" Padding="12" Height="300">
+                            <TextBox x:Name="TxtBoxLogHistory" IsReadOnly="True" Background="Transparent" Foreground="{StaticResource TextPrimary}" 
+                                     BorderThickness="0" FontFamily="Consolas, Cascadia Code, Courier New" FontSize="12" 
+                                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextWrapping="NoWrap" />
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+
+            <!-- SPLITTER REDIMENSIONÁVEL -->
+            <GridSplitter Grid.Row="2" Height="4" HorizontalAlignment="Stretch" Background="{StaticResource Border}" ShowsPreview="True" Cursor="SizeNS" />
+
+            <!-- PAINEL TERMINAL / CONSOLE DE EXECUÇÃO -->
+            <Border Grid.Row="3" Background="{StaticResource ConsoleBg}" BorderBrush="{StaticResource Border}" BorderThickness="0,1,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- BARRA DE FERRAMENTAS DO TERMINAL -->
+                    <Border Grid.Row="0" Background="{StaticResource Surface}" BorderBrush="{StaticResource Border}" BorderThickness="0,0,0,1" Padding="12,6">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock x:Name="LblTerminalHeader" Text="📟 TERMINAL / SAÍDA EM TEMPO REAL" FontSize="11" FontWeight="Bold" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                                <Border x:Name="BadgeStatus" Background="#161B22" BorderBrush="{StaticResource Border}" BorderThickness="1" CornerRadius="12" Padding="8,2">
+                                    <TextBlock x:Name="TxtTerminalStatus" Text="Pronto" FontSize="11" Foreground="{StaticResource Success}" />
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                <CheckBox x:Name="ChkAutoScroll" Content="Auto-scroll" IsChecked="True" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                                <Button x:Name="BtnCopiarTerminal" Content="📋 Copiar" Style="{StaticResource SecondaryButton}" Padding="8,4" FontSize="11" Margin="0,0,6,0" Click="BtnCopiarTerminal_Click" />
+                                <Button x:Name="BtnLimparTerminal" Content="🗑️ Limpar" Style="{StaticResource SecondaryButton}" Padding="8,4" FontSize="11" Margin="0,0,6,0" Click="BtnLimparTerminal_Click" />
+                                <Button x:Name="BtnCancelarExecucao" Content="⏹️ Interromper" Style="{StaticResource DangerButton}" Padding="8,4" FontSize="11" IsEnabled="False" Click="BtnCancelarExecucao_Click" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- ÁREA DE TEXTO DO TERMINAL -->
+                    <TextBox x:Name="TxtTerminal" Grid.Row="1" IsReadOnly="True" 
+                             Background="{StaticResource ConsoleBg}" Foreground="#E6EDF3"
+                             FontFamily="Consolas, Cascadia Mono, Lucida Console, Courier New" FontSize="12"
+                             BorderThickness="0" Padding="12"
+                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" 
+                             TextWrapping="Wrap" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

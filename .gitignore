@@ -1,0 +1,16 @@
+# Visual Studio / .NET
+**/bin/
+**/obj/
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# Builds de Publicação
+Publish/
+Publish-Standalone/
+
+# Arquivos temporários e zips locais
+*.zip
+painel-suporte-ti-main/
